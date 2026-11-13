@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10111b">
+  <title>CoverCraft — Assignment Cover Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/editor.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="CoverCraft home"><span class="brand-mark">C</span><span>Cover<span class="brand-accent">Craft</span><small>ASSIGNMENT COVER DESIGNER</small></span></a>
+    <div class="top-actions">
+      <span class="save-note"><i></i> Local session only</span>
+      <button class="btn btn-ghost" id="resetBtn" title="Clear the current design">Reset</button>
+      <button class="btn btn-primary" id="exportBtn"><span>Export</span><b>↗</b></button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <aside class="left-panel">
+      <div class="panel-tabs" role="tablist">
+        <button class="tab active" data-tab="templates">Templates</button>
+        <button class="tab" data-tab="elements">Elements</button>
+        <button class="tab" data-tab="setup">Page</button>
+      </div>
+
+      <section class="tab-panel active" id="tab-templates">
+        <div class="section-heading"><div><h2>Start with a design</h2><p>Choose a background or a ready-made layout.</p></div></div>
+        <div class="subheading">BACKGROUND COLLECTION</div>
+        <div class="template-grid" id="backgroundGrid">
+          <button class="template-card selected" data-bg="aurora"><span class="mini-preview bg-aurora"></span><b>Aurora</b><small>Modern gradient</small></button>
+          <button class="template-card" data-bg="grid"><span class="mini-preview bg-grid"></span><b>Geometry</b><small>Clean shapes</small></button>
+          <button class="template-card" data-bg="science"><span class="mini-preview bg-science"></span><b>Science</b><small>Organic lines</small></button>
+          <button class="template-card" data-bg="math"><span class="mini-preview bg-math"></span><b>Mathematics</b><small>Equation style</small></button>
+          <button class="template-card" data-bg="literature"><span class="mini-preview bg-literature"></span><b>Literature</b><small>Editorial</small></button>
+          <button class="template-card" data-bg="plain"><span class="mini-preview bg-plain"></span><b>Minimal</b><small>Plain paper</small></button>
+        </div>
+        <div class="subheading space-top">READY-MADE STRUCTURES</div>
+        <div class="structure-list">
+          <button class="structure-card" data-structure="classic"><span class="structure-thumb classic-thumb">Aa</span><span><b>01 · Traditional</b><small>Centered academic layout</small></span><span class="chevron">›</span></button>
+          <button class="structure-card" data-structure="modern"><span class="structure-thumb modern-thumb">Aa</span><span><b>02 · Modern</b><small>Editorial and minimal</small></span><span class="chevron">›</span></button>
+          <button class="structure-card" data-structure="creative"><span class="structure-thumb creative-thumb">Aa</span><span><b>03 · Creative</b><small>Bold title composition</small></span><span class="chevron">›</span></button>
+        </div>
+        <p class="hint">All built-in backgrounds are generated with original CSS/SVG shapes. No stock-image watermark.</p>
+      </section>
+
+      <section class="tab-panel" id="tab-elements">
+        <div class="section-heading"><div><h2>Add elements</h2><p>Build your cover your way.</p></div></div>
+        <button class="add-element" id="addTextBtn"><span class="add-icon">T</span><span><b>Add text</b><small>Heading, details or any language</small></span><strong>＋</strong></button>
+        <label class="add-element upload-element"><span class="add-icon">▧</span><span><b>Add institution logo</b><small>PNG, JPG or SVG</small></span><strong>＋</strong><input type="file" id="logoInput" accept="image/png,image/jpeg,image/webp,image/svg+xml"></label>
+        <div class="subheading space-top">QUICK TEXT</div>
+        <div class="quick-texts">
+          <button data-quick="ASSIGNMENT TITLE">Assignment title</button>
+          <button data-quick="Submitted To">Submitted to</button>
+          <button data-quick="Submitted By">Submitted by</button>
+          <button data-quick="Department">Department</button>
+        </div>
+        <div class="subheading space-top">TIPS</div>
+        <p class="hint">Select an item on the page to edit it. Drag to move. Use the corner handle to resize. Press Delete to remove the selected item.</p>
+      </section>
+
+      <section class="tab-panel" id="tab-setup">
+        <div class="section-heading"><div><h2>Page setup</h2><p>Choose the paper and orientation.</p></div></div>
+        <label class="field-label">PAPER SIZE</label>
+        <select id="paperSize" class="control">
+          <option value="A4">A4 · 210 × 297 mm</option><option value="A3">A3 · 297 × 420 mm</option>
+          <option value="A5">A5 · 148 × 210 mm</option><option value="Letter">Letter · 8.5 × 11 in</option>
+          <option value="Legal">Legal · 8.5 × 14 in</option><option value="custom">Custom size</option>
+        </select>
+        <div class="field-label gap-label">ORIENTATION</div>
+        <div class="segmented"><button class="active" data-orientation="portrait">▯ Portrait</button><button data-orientation="landscape">▱ Landscape</button></div>
+        <div id="customSize" class="two-fields hidden">
+          <label>Width (mm)<input class="control" type="number" id="customWidth" min="50" max="1000" value="210"></label>
+          <label>Height (mm)<input class="control" type="number" id="customHeight" min="50" max="1000" value="297"></label>
+        </div>
+        <div class="field-label gap-label">PAGE BACKGROUND</div>
+        <div class="color-row"><input type="color" id="pageColor" value="#ffffff"><span>Base paper color</span></div>
+        <div class="field-label gap-label">SAFE MARGIN</div>
+        <div class="range-row"><input type="range" id="marginRange" min="0" max="30" value="8"><span id="marginValue">8 mm</span></div>
+        <p class="hint">The safe margin is a visual guide and is not printed.</p>
+      </section>
+    </aside>
+
+    <section class="canvas-area">
+      <div class="canvas-toolbar">
+        <div class="canvas-title"><span class="live-dot"></span><b>Untitled cover</b><span class="edited-label">Editing</span></div>
+        <div class="canvas-tools">
+          <button class="icon-btn" id="zoomOut" title="Zoom out">−</button><span id="zoomValue">70%</span><button class="icon-btn" id="zoomIn" title="Zoom in">＋</button>
+          <span class="tool-divider"></span><button class="icon-btn" id="deleteSelected" title="Delete selected">⌫</button>
+        </div>
+      </div>
+      <div class="stage-wrap" id="stageWrap">
+        <div class="paper" id="paper" data-bg="aurora">
+          <div class="safe-margin" id="safeMargin"></div>
+          <div class="design-layer" id="designLayer"></div>
+        </div>
+      </div>
+      <div class="canvas-footer"><span><span class="kbd">Esc</span> deselect <span class="kbd">Del</span> remove selected</span><span id="dimensionLabel">A4 · 210 × 297 mm</span></div>
+    </section>
+
+    <aside class="right-panel">
+      <div class="right-heading"><h2>Properties</h2><span class="properties-dot"></span></div>
+      <div id="emptyProperties" class="empty-properties"><div class="empty-icon">⌖</div><b>Nothing selected</b><p>Select a text or logo on your page to edit its properties.</p></div>
+      <div id="propertiesForm" class="properties-form hidden">
+        <div class="property-title"><span id="selectedType">TEXT ELEMENT</span><button id="removeElement" class="text-danger">Remove</button></div>
+        <label class="field-label">CONTENT</label>
+        <textarea id="textContent" class="control text-content" rows="3"></textarea>
+        <div class="two-fields">
+          <label>FONT SIZE (PX)<input id="fontSize" class="control" type="number" min="6" max="160" value="24"></label>
+          <label>FONT FAMILY<select id="fontFamily" class="control"><option>Inter</option><option>Noto Sans Bengali</option><option>Arial</option><option>Georgia</option><option>Times New Roman</option><option>Courier New</option></select></label>
+        </div>
+        <div class="field-label gap-label">TEXT STYLE</div>
+        <div class="style-buttons"><button id="boldBtn" title="Bold"><b>B</b></button><button id="italicBtn" title="Italic"><i>I</i></button><button id="alignLeft" title="Align left">☰</button><button id="alignCenter" title="Align center">≡</button><button id="alignRight" title="Align right">☷</button></div>
+        <div class="two-fields">
+          <label>TEXT COLOR<input id="textColor" class="control color-control" type="color" value="#20243a"></label>
+          <label>LINE HEIGHT<input id="lineHeight" class="control" type="number" min="0.8" max="3" step=".1" value="1.3"></label>
+        </div>
+        <div class="field-label gap-label">ENCODING MODE</div>
+        <select id="encodingMode" class="control"><option value="unicode">Unicode text</option><option value="ansi">ANSI / legacy font</option></select>
+        <p class="hint tiny">ANSI is not one universal encoding. For Bijoy/SutonnyMJ, paste text already converted to the matching legacy byte sequence and choose an installed or uploaded legacy font. This editor does not guess-convert ANSI text.</p>
+        <div class="field-label gap-label">CUSTOM FONT</div>
+        <label class="upload-font">＋ Upload font (.ttf, .otf, .woff, .woff2)<input type="file" id="fontInput" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2"></label>
+        <div class="field-label gap-label">POSITION & SIZE</div>
+        <div class="two-fields">
+          <label>X (mm)<input id="posX" class="control" type="number" step=".5"></label>
+          <label>Y (mm)<input id="posY" class="control" type="number" step=".5"></label>
+          <label>WIDTH (mm)<input id="elemW" class="control" type="number" min="5" step=".5"></label>
+          <label>HEIGHT (mm)<input id="elemH" class="control" type="number" min="5" step=".5"></label>
+        </div>
+      </div>
+      <div class="right-bottom">
+  <span>Credits</span>
+  <a class="credits-link" href="https://github.com/nexora-org-web/Nexora-Official" target="_blank" rel="noopener noreferrer" aria-label="NEXORA on GitHub">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.54v-2.08c-3.1.67-3.75-1.32-3.75-1.32-.5-1.28-1.23-1.62-1.23-1.62-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 .1.76 2.13 3.29 1.63.1-.71.39-1.19.7-1.47-2.47-.28-5.07-1.24-5.07-5.52 0-1.22.44-2.21 1.15-2.99-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.11-1.44 3.05-1.14 3.05-1.14.61 1.54.23 2.68.11 2.96.72.78 1.15 1.77 1.15 2.99 0 4.29-2.6 5.24-5.08 5.52.4.35.75 1.03.75 2.08v3.09c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z"/></svg>
+    <span>NEXORA</span>
+  </a>
+</div>
+    </aside>
+  </main>
+
+  <div class="modal-backdrop hidden" id="exportModal">
+    <div class="modal">
+      <button class="modal-close" id="closeExport">×</button>
+      <div class="modal-icon">⇧</div><h2>Export your cover</h2><p>Choose a format. Your file is generated in your browser.</p>
+      <div class="export-options">
+        <button id="downloadPdf" class="export-option"><span class="file-icon pdf">PDF</span><span><b>PDF document</b><small>Print-ready page size</small></span><span>›</span></button>
+        <button id="downloadJpg" class="export-option"><span class="file-icon jpg">JPG</span><span><b>JPEG image</b><small>High-resolution image</small></span><span>›</span></button>
+      </div>
+      <p class="export-note">Export uses your current page dimensions and background. For Bengali fonts, wait until the font is fully loaded before exporting.</p>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
